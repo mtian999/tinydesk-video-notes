@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tiny Desk AI Video — notes on a fixed-template band video generator</title>
+<meta name="description" content="Field notes on building a five-player AI band video generator where every cast slot is optional and the performance template is fixed.">
+<style>
+  :root { color-scheme: light dark; }
+  body { max-width: 720px; margin: 3rem auto; padding: 0 1.25rem; font: 16px/1.65 -apple-system, "Segoe UI", Roboto, sans-serif; }
+  h1 { font-size: 1.7rem; line-height: 1.25; }
+  h2 { margin-top: 2.2rem; font-size: 1.2rem; }
+  code { background: rgba(127,127,127,.16); padding: .1em .35em; border-radius: 4px; }
+  .note { border-left: 3px solid #888; padding-left: 1rem; color: #666; }
+  footer { margin-top: 3rem; font-size: .9rem; color: #666; }
+</style>
+</head>
+<body>
+<h1>Tiny Desk AI Video: notes on a fixed-template band video generator</h1>
+
+<p class="note">Field notes from testing <a href="https://tinydeskaivideo.cc/">Tiny Desk AI Video</a>, an AI band video generator. Written for people building something similar, not as marketing.</p>
+
+<h2>The problem is the cast, not the model</h2>
+
+<p>A "band video" template is five independent portrait slots composited into one staged performance: back left, back right, keys, lead and sax. Two of those slots sit behind the others, so occlusion order decides whether a generated portrait reads as a band member or as a sticker pasted on top.</p>
+
+<p>The design decision that matters most is making every slot optional. An empty slot falls back to a fixed dog character, which means the tool works with zero uploads. That sounds like a small convenience. It is actually what makes the first run fast enough to keep anyone's attention.</p>
+
+<h2>Limits worth stating before someone hits them</h2>
+
+<ul>
+  <li>Five photos, JPG, PNG or WebP, 8 MB each.</li>
+  <li>Formats: 9:16 vertical, 1:1 square, 16:9 landscape. 720p or 1080p.</li>
+  <li>No 4:5. Saying so is cheaper than letting people discover it in an error state.</li>
+  <li>The prompt and the music are fixed by the template. Pretending otherwise creates support load for a feature that does not exist.</li>
+  <li>Celebrity and public-figure photos are out, and no permission checkbox overrides that.</li>
+</ul>
+
+<h2>Show the credit cost before the click</h2>
+
+<p>Show the exact credit cost for the current format and quality selection, not a range. A range reads as a lie the first time the number comes in higher.</p>
+
+<h2>Generation is slow, so hand back a reference</h2>
+
+<p>A band video takes minutes, not seconds. Returning a request reference lets the user close the tab, come back later and check status instead of watching a progress bar. Videos are kept for 30 days, and the guidance says to download promptly — both should be visible before the first run, not after.</p>
+
+<h2>What this is not</h2>
+
+<p>It is a performance generator, not a video editor. You choose optional cast photos, format and quality; everything else is set. That constraint is the product. Trying to open up the prompt would turn a two-minute task into a blank timeline.</p>
+
+<footer>
+  <p>Tested at <a href="https://tinydeskaivideo.cc/">tinydeskaivideo.cc</a>. Independent tool by One Hub All AI; not affiliated with any radio show or concert series.</p>
+</footer>
+</body>
+</html>
